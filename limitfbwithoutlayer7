@@ -1,12 +1,12 @@
 /ip firewall mangle add chain=forward in-interface=ether1 src-address=192.168.10.0/24 content=.googlevideo.com action=add-dst-to-address-list address-list="Youtube" comment="Youtube"
 
-/ip firewall mangle add chain=forward in-interface=ether1 src-address=192.168.10.0/24 dst-address-list="Youtube" action=mark-connection new-connection-mark="Youtube-Conn" comment="Youtube-Conn"
+/ip firewall mangle add chain=forward in-interface=ether1 src-address=192.168.10.0/24 dst-address-list="Youtube" action=mark-connection new-connection-mark="Youtube-Conn" comment="YT-Conn"
 
-/ip firewall mangle add chain=forward connection-mark="Youtube-Conn" action=mark-packet new-packet-mark="Youtube-Packet" comment="Youtube-Packet"
+/ip firewall mangle add chain=forward connection-mark="YT-Conn" action=mark-packet new-packet-mark="YT-Packet" comment="YT-Packet"
 
-/queue tree add name="Youtube" parent=global packet-mark="Youtube-Packet" max-limit=10M 
+/queue tree add name="Youtube" parent=global packet-mark="YT-Packet" max-limit=5M 
 
-Catatan : 
-	- in-interface=ether1 ( ganti dengan interface yg mau dilimit )
-	- src-address=192.168.10.0/24 ( ganti dengan address/ip jaringan local yg mau dilimit )
-	- max-limit=10M ( ganti dengan bandwith yg ingin anda berikan untuk youtube )
+PS: 
+	- in-interface=ether1 ( ubah interface target )
+	- src-address=192.168.10.0/24 ( ubah address/ip jaringan local target )
+	- max-limit=5M ( youtube bandwith bisa disesuaikan dengan kebutuhan )
